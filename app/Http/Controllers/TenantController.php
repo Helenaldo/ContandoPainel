@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegistered;
 use App\Models\Tenant;
 use App\Http\Requests\StoreTenantRequest;
 use App\Http\Requests\UpdateTenantRequest;
@@ -63,7 +64,10 @@ class TenantController extends Controller
             'email' => $tenant['email'], // O email já está em minúsculas
             'password' => Hash::make('password'), // Senha provisória 'password'
         ];
-        User::create($user);
+        $newUser = User::create($user);
+
+        // Dispara email de boas vindas ao usuário
+        UserRegistered::dispatch($newUser);
 
         return response()->json(['message' => 'Empresa cadastrada com sucesso!'], JsonResponse::HTTP_CREATED);
     }
