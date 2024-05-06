@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +18,7 @@ class WelcomeMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public Tenant $tenant, public User $user, public $passwordTemp)
     {
         //
     }
@@ -27,8 +28,9 @@ class WelcomeMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        //$customSubject = "Bem-Vindo ao " . $this->tenant->name . "!";
         return new Envelope(
-            subject: 'Welcome Mail',
+            subject: 'Bem vindo ao Contando',
         );
     }
 

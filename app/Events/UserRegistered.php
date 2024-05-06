@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -18,7 +19,7 @@ class UserRegistered
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public Tenant $tenant, public User $user, public $passwordTemp)
     {
         //
     }

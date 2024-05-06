@@ -1,4 +1,4 @@
-{{-- Seja bem vindo ao Contando, {{ $user->name }} --}}
+
 @extends('emails.partials.layout')
 
 
@@ -28,7 +28,7 @@
                                     style="font-family:'Barlow',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:900;font-style:normal;color:#50C0FF;text-decoration:none;letter-spacing:1px;">
                                     <singleline>
                                         <div mc:edit data-text-edit>
-                                            Bom ver você por aqui
+                                            Bom ver você por aqui, {{ $user->name }}
                                         </div>
                                     </singleline>
                                 </td>
@@ -52,16 +52,39 @@
                                     style="font-family:'Barlow',Arial,Helvetica,sans-serif;font-size:16px;line-height:26px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
                                     <singleline>
                                         <div mc:edit data-text-edit>
-                                            O Contando é um sistema contruído para gerir escritórios de contabilidade. <br>
-                                            Pensado por contadoes, visa otimizar as tarefas diárias da contabilidade. <br>
+                                            <p>O Contando é um sistema contruído para gerir escritórios de contabilidade. <br>
+                                            Pensado por contadoes, visa otimizar as tarefas diárias da contabilidade. </p>
                                             Ative a sua conta e veja tudo que podemos fazer por você.
+
                                         </div>
                                     </singleline>
+                            </tr>
+                            <tr data-element="blue-header-paragraph" data-label="Paragraphs">
+                                <td height="25" style="font-size:25px;line-height:25px;"
+                                    data-height="Spacing under paragraph">&nbsp;
+
+                                </td>
+                            </tr>
+                            <tr data-element="blue-paragraph" data-label="Paragraphs">
+                                <td class="center-text" data-text-style="Paragraphs" align="center"
+                                    style="font-family:'Barlow',Arial,Helvetica,sans-serif;font-size:16px;line-height:26px;font-weight:400;font-style:normal;color:#333333;text-decoration:none;letter-spacing:0px;">
+                                    <singleline>
+                                        <div mc:edit data-text-edit>
+                                            <b>Contrato:</b> {{ $tenant->contrato }}<br>
+                                            <b>Senha Provisória: </b> {{ $passwordTemp }}
+
+                                        </div>
+                                    </singleline>
+
+
+
                                 </td>
                             </tr>
                             <tr data-element="blue-header-paragraph" data-label="Paragraphs">
                                 <td height="25" style="font-size:25px;line-height:25px;"
-                                    data-height="Spacing under paragraph">&nbsp;</td>
+                                    data-height="Spacing under paragraph">&nbsp;
+
+                                </td>
                             </tr>
                             <tr data-element="blue-button" data-label="Buttons">
                                 <td align="center">

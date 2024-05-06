@@ -1,6 +1,12 @@
 CONTANDO PAINEL
 Módulo API do Contando que irá fazer a gestão da contabilidade
 
+0) AÇÕES QUANDO SUBIR PARA PRODUÇÃO
+0.1) Definir no .env o caminho base para o verify-email quando
+     clicar no envio do email (http://localhost:8001/verify-email)
+0.2) No EmailVerificationController, no método verifyEmail, tem quer colocar o redirect para login
+     com a mensagem (Usuário confirmardo com Sucesso, faça o login)
+
 <!-- 1) Criar model e migrate de Cidade -->
 <!-- 2) Criar model e migrate de Tenant -->
 <!-- 3) Criar migrate update de User para receber o id do Tenant -->
@@ -10,9 +16,13 @@ Módulo API do Contando que irá fazer a gestão da contabilidade
 
 
 7) Ativação de conta
-7.1) Primeiro email, de boas vindas, deve confirmar o e-mail e criar uma senha definitiva para o usuário.
-        Neste e-mail o usuário deve receber a senha provisória e o código do contrato.
-7.2) Criar um formulário de ativação de conta, onde o usuário vai digitar o código do contrato e a senha provisória.
+<!-- 7.1) Primeiro email, de boas vindas, deve confirmar o e-mail e criar uma senha definitiva para o usuário.
+        Neste e-mail o usuário deve receber a senha provisória e o código do contrato. -->
+<!-- 7.2) Criar um formulário de ativação de conta, onde o usuário vai digitar o código do contrato e a senha provisória -->
+<!-- 7.3) Colocar para gerar senha provisória aleatória no TenantController e enviar para o usuário via email. -->
+
+8) DEFINIÇÕES E CONFIGURAÇÃO DO MULT-TENANT
+8.1) Estudar aula do youtube, aplicar e anotar
 
 https://www.rfc-editor.org/rfc/rfc7231
 +------+-------------------------------+--------------------------+

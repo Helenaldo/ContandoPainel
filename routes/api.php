@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\UserRegistered;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CidadesController;
@@ -26,7 +27,4 @@ Route::post('email', function() {
     UserRegistered::dispatch();
 });
 
-
-Route::get('email2', function() {
-    return view('emails.welcome');
-});
+Route::post('/verify-email', EmailVerificationController::class);

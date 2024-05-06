@@ -24,7 +24,10 @@ class SendWelcomeEmail
     public function handle(UserRegistered $event): void
     {
         $user = $event->user;
+        $tenant = $event->tenant;
+        $passwordTemp = $event->passwordTemp;
+
         Mail::to($user->email)
-            ->send(new WelcomeMail($user));
+            ->send(new WelcomeMail($tenant, $user, $passwordTemp));
     }
 }

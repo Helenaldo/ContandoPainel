@@ -57,17 +57,18 @@ class TenantController extends Controller
         // Salvando na tabela Tenant
         $createdTenant = Tenant::create($tenant);
 
+        $passwordTemp = Str::random(6);
         // Salvando o primeiro usuário do Tenant
         $user = [
             'tenant_id' => $createdTenant->id, // Utilizando o ID do Tenant recém-criado
             'name' => $tenant['nome'],
             'email' => $tenant['email'], // O email já está em minúsculas
-            'password' => Hash::make('password'), // Senha provisória 'password'
+            'password' => Hash::make($passwordTemp), // Senha provisória 'password'
         ];
         $newUser = User::create($user);
 
         // Dispara email de boas vindas ao usuário
-        UserRegistered::dispatch($newUser);
+        UserRegistered::dispatch($createdTenant, $newUser, $passwordTemp);
 
         return response()->json(['message' => 'Empresa cadastrada com sucesso!'], JsonResponse::HTTP_CREATED);
     }
