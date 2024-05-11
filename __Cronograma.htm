@@ -21,8 +21,21 @@ Módulo API do Contando que irá fazer a gestão da contabilidade
 <!-- 7.2) Criar um formulário de ativação de conta, onde o usuário vai digitar o código do contrato e a senha provisória -->
 <!-- 7.3) Colocar para gerar senha provisória aleatória no TenantController e enviar para o usuário via email. -->
 
-8) DEFINIÇÕES E CONFIGURAÇÃO DO MULT-TENANT
-8.1) Estudar aula do youtube, aplicar e anotar
+8) DEFINIÇÕES E CONFIGURAÇÃO DO MULT-TENANT - ARQUITETURA 54 minutos
+https://www.youtube.com/watch?v=R76u2TkZ75U&list=PL7ScB28KYHhG7zRAiiPrFkQlPUr4n95oj
+8.1) Colocado index() na coluna tenant_id da migrate User para performar melhor;
+8.2) Observação: Tabelas comuns para todos não precisa do tenant_id
+8.3) Criado arquivo Model/Scopes/TenantScope para padronizar as consultas no DB
+8.4) Criado a Trait App\Model\Traits\TanantTable para
+8.5) Criado o Listener para setar o tanatId na sessão (SetTenantIdSession.php)
+8.6) Adicionado em AppServiceProvider para chamar a classe SetTenantIdSession quando logado. Ver se está correto.
+8.7) Modificado o Stub/migration.create.stub para incluir automaticamente a criação da coluna tenant_id quando criar uma migrate
+8.8) Modificado o Stub/model.stub para incluir automaticamente o use TenantTable na criação de novas models
+8.9) Criado um model Event. Acho que não precisa, pois é apenas para exemplificar que funciona.
+
+
+
+
 
 https://www.rfc-editor.org/rfc/rfc7231
 +------+-------------------------------+--------------------------+

@@ -12,8 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(Tenant::class)->after('id')->index();
+            $table->string('event_name');
+            $table->dateTime('event_date');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tenant_id');
-        });
+        Schema::dropIfExists('events');
     }
 };
