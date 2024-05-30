@@ -6,9 +6,10 @@ use App\Models\Traits\TenantTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Cliente extends Model
 {
     use HasFactory, TenantTable;
 
+    protected $table = 'clientes';
     protected $guarded = ['id'];
 }

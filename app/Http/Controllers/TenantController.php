@@ -10,7 +10,6 @@ use App\Http\Resources\TenantResource;
 use App\Models\User;
 use App\Services\ContractIdentifierService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 

@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\Tenant;
 use App\Models\Scopes\TenantScope;
+use Illuminate\Support\Facades\Auth;
 
 trait TenantTable
 {
@@ -13,11 +14,17 @@ trait TenantTable
 
         static::addGlobalScope(new TenantScope);
 
-        if(session()->has('tenant_id') && !is_null(session()->get('tenant_id'))) {
+        if(Auth::user()) {
             static::creating(function($model) {
-                $model->tenant_id = session()->get('tenant_id');
+                $model->tenant_id = Auth::user()->tenant_id;
             });
         }
+
+        // if(session()->has('tenant_id') && !is_null(session()->get('tenant_id'))) {
+        //     static::creating(function($model) {
+        //         $model->tenant_id = session()->get('tenant_id');
+        //     });
+        // }
     }
 
     public function tenant() {
