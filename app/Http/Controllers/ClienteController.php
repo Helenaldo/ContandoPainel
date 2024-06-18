@@ -68,8 +68,6 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
         $dados = $request->only([
-            'tipo_identificacao', // CNPJ ou CPF
-            'cpf_cnpj',
             'nome',
             'fantasia',
             'cep',

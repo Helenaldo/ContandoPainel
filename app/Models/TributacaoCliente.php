@@ -6,15 +6,16 @@ use App\Models\Traits\TenantTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class TributacaoCliente extends Model
 {
     use HasFactory, TenantTable;
 
-    protected $table = 'clientes';
     protected $guarded = ['id'];
+    protected $table = 'tributacao_clientes';
 
-        // vários cliente tem vários tributações
-        public function tributaoes() {
-            return $this->hasMany(TributacaoCliente::class);
+        // Vários clientes tem várias tributações
+        public function cliente() {
+            return $this->belongsTo(Cliente::class);
         }
+
 }
