@@ -49,8 +49,7 @@ class TributacaoClienteController extends Controller
     public function show(TributacaoCliente $tributacaoCliente)
     {
         // Carregar o relacionamento 'cliente' juntamente com a consulta
-        $tributacaoCliente = $tributacaoCliente->with('cliente')->find($tributacaoCliente->id);
-
+        $tributacaoCliente->load('cliente');
         return response()->json($tributacaoCliente);
     }
 

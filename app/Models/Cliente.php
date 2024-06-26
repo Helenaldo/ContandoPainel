@@ -17,4 +17,9 @@ class Cliente extends Model
         public function tributaoes() {
             return $this->hasMany(TributacaoCliente::class);
         }
+
+        // Um Cliente tem vários contatos
+        public function contatos() {
+            return $this->hasMany(Contato::class);
+        }
 }

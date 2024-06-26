@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('avatar')->nullable();
+            $table->string('status'); // Administrador ou Operador
+            $table->boolean('ativo')->default(1); // 1- Ativo ou 0 - Inativo
             $table->rememberToken();
             $table->timestamps();
         });

@@ -63,6 +63,7 @@ class TenantController extends Controller
             'name' => $tenant['nome'],
             'email' => $tenant['email'], // O email já está em minúsculas
             'password' => Hash::make($passwordTemp), // Senha provisória 'password'
+            'status' => 'Administrador'
         ];
         $newUser = User::create($user);
 

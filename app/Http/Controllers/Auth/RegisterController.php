@@ -12,8 +12,13 @@ class RegisterController extends Controller
         $user = $request->only([
             'name',
             'email',
-            'password'
+            'password',
+            'avatar', // Imagem do usuário
+            'status', // Administrador ou Operador
+            'ativo'// boolean
         ]);
+
+        $user['status'] = 'Administrador';
 
         $user = User::create($user);
 
