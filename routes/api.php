@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('/processos', ProcessoController::class);
     Route::apiResource('/app/user', UserController::class);
 
+    Route::post('app/user/avatar', [UserController::class, 'changeAvatarAction'])->name('change.avatar');
+
 });
 
 

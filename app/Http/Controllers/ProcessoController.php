@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Processo;
 use App\Http\Requests\StoreProcessoRequest;
 use App\Http\Requests\UpdateProcessoRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class ProcessoController extends Controller
 {
@@ -13,7 +16,7 @@ class ProcessoController extends Controller
      */
     public function index()
     {
-        //
+        return Processo::with(['cliente', 'user'])->get();
     }
 
     /**
@@ -21,7 +24,32 @@ class ProcessoController extends Controller
      */
     public function store(StoreProcessoRequest $request)
     {
-        //
+        try {
+            $processo = $request->only([
+                'cliente_id',
+                'user_id',
+                'numero',
+                'titulo',
+                'data', // obrigatório
+                'prazo',
+                //'concluido',
+            ]);
+
+            // 'prazo', se não vier somar 30 dias da data
+            if (!isset($processo['prazo'])) {
+                $processo['prazo'] = date('Y-m-d', strtotime($processo['data'] . ' +30 days'));
+            }
+
+            Processo::create($processo);
+
+            return response()->json(['message' => 'Processo cadastrado com sucesso!'], JsonResponse::HTTP_CREATED);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Erro de validação',
+                'errors' => $e->errors(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     /**
@@ -29,7 +57,8 @@ class ProcessoController extends Controller
      */
     public function show(Processo $processo)
     {
-        //
+        $processo->load(['cliente', 'user']);
+        return response()->json($processo);
     }
 
     /**
@@ -37,7 +66,19 @@ class ProcessoController extends Controller
      */
     public function update(UpdateProcessoRequest $request, Processo $processo)
     {
-        //
+        $dados = $request->only([
+            'cliente_id',
+            'user_id',
+            'numero',
+            'titulo',
+            'data', // obrigatório
+            'prazo',
+            //'concluido',
+        ]);
+
+        $processo->update($dados);
+
+        return response()->json(['message' => 'Processo atualizado com sucesso!'], JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -45,6 +86,6 @@ class ProcessoController extends Controller
      */
     public function destroy(Processo $processo)
     {
-        //
+        return $processo->delete();
     }
 }

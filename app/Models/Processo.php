@@ -12,4 +12,14 @@ class Processo extends Model
 
     protected $guarded = ['id'];
     protected $table = 'processos';
+
+    // Cliente tem várias processos
+    public function cliente() {
+        return $this->belongsTo(Cliente::class);
+    }
+
+    // Usuário tem várias processos
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

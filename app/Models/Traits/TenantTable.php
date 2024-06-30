@@ -11,20 +11,14 @@ trait TenantTable
 
     protected static function bootTenantTable() {
         // Adiciona o escopo de tenant para todas as consultas
-
+        // dd(Auth::user());
         static::addGlobalScope(new TenantScope);
 
-        if(Auth::user()) {
-            static::creating(function($model) {
+        static::creating(function($model) {
+            if(Auth::user()) {
                 $model->tenant_id = Auth::user()->tenant_id;
-            });
-        }
-
-        // if(session()->has('tenant_id') && !is_null(session()->get('tenant_id'))) {
-        //     static::creating(function($model) {
-        //         $model->tenant_id = session()->get('tenant_id');
-        //     });
-        // }
+            }
+        });
     }
 
     public function tenant() {

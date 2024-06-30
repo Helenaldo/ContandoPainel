@@ -21,8 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->string('numero')->nullable();
             $table->string('titulo');
-            $table->string('status')->nullable(); // em andamento, atrasado, concluído
-            $table->date('data')->nullable();
+            $table->date('data');
             $table->date('prazo')->nullable();
             $table->date('concluido')->nullable();
             $table->timestamps();

@@ -13,9 +13,9 @@ class TributacaoCliente extends Model
     protected $guarded = ['id'];
     protected $table = 'tributacao_clientes';
 
-        // Vários clientes tem várias tributações
-        public function cliente() {
-            return $this->belongsTo(Cliente::class);
-        }
+    // Vários clientes tem várias tributações
+    public function cliente() {
+        return $this->belongsTo(Cliente::class);
+    }
 
 }
