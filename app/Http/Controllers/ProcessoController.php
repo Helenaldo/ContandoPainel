@@ -57,7 +57,12 @@ class ProcessoController extends Controller
      */
     public function show(Processo $processo)
     {
-        $processo->load(['cliente', 'user']);
+        // Carregar as relações especificadas junto com o modelo Processo
+        $processo->load(['cliente', 'user', 'movimentos' => function($query) {
+            $query->orderBy('data', 'desc');
+        }, 'tenant']);
+
+        // Retornar o recurso Processo como uma resposta JSON
         return response()->json($processo);
     }
 

@@ -22,4 +22,12 @@ class Processo extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function movimentos() {
+        return $this->hasMany(ProcessoMovimento::class);
+    }
+
+    public function tenant() {
+        return $this->belongsTo(Tenant::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CidadesController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ContatoClienteController;
 use App\Http\Controllers\ProcessoController;
+use App\Http\Controllers\ProcessoMovimentoController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TributacaoClienteController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('/cliente', ClienteController::class);
     Route::apiResource('/tributacao-cliente', TributacaoClienteController::class);
     Route::apiResource('/contato-cliente', ContatoClienteController::class);
+    Route::apiResource('/processos/movimentos', ProcessoMovimentoController ::class);
     Route::apiResource('/processos', ProcessoController::class);
     Route::apiResource('/app/user', UserController::class);
 
