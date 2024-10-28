@@ -7,6 +7,7 @@ use App\Rules\CidadeExiste;
 use App\Rules\CleanCepRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class UpdateTenantRequest extends FormRequest
 {
@@ -36,7 +37,11 @@ class UpdateTenantRequest extends FormRequest
             'complemento' => 'nullable|string|max:255',
             'telefone' => 'required|string',
             'cidade_id' => ['required', 'integer', new CidadeExiste],
-            'data_saida' => 'date'
+            'data_saida' => 'date',
+            'logo' => [
+                'sometimes',
+                File::image()->max('2mb'),
+            ]
 
         ];
     }

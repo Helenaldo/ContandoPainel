@@ -15,7 +15,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // Valida se exite e se senha estar correta
-        if(! $user ||! Hash::check($request->password, $user->password)) {
+        if(! $user ||! Hash::check($request->password, $user->password) || $user->ativo == false) {
             return response()->json([
                 'success' => false,
                 'message' => 'Falha na autenticação de usuário.'

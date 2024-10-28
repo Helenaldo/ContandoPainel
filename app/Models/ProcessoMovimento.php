@@ -25,4 +25,12 @@ class ProcessoMovimento extends Model
     public function cliente() {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function getAnexoAttribute($value) {
+        if($value) {
+            return url($value);
+        }
+        return null;
+    }
+
 }

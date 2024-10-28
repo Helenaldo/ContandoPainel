@@ -26,7 +26,7 @@ class TenantController extends Controller
      */
     public function index()
     {
-        return Tenant::with('users')->get();
+        return Tenant::with('users', 'clientes', 'processos', 'cidade')->get();
     }
 
     /**
@@ -101,14 +101,26 @@ class TenantController extends Controller
                 'cidade_id',
                 'telefone',
                 'data_saida',
+                'logo',
             ]);
             $tenant->fill($data)->save();
-
-            return response()->json(['message' => 'Empresa alterada com sucesso!']);
-
-
         }
-        //return redirect()->route('tenant.listar')->with('error', 'Cliente não alterado');
+
+        if($request->hasFile('anexo')) {
+            $nameFile = Str::uuid().'.pdf';
+            $caminhoFile = 'upload/'.$tenant->cnpj_cpf_formatado.'/'.$tenant->cpf_cnpj_formatado;
+            $caminhoCompleto = $caminhoFile.'/'.$nameFile;
+
+            $request->file('logo')->move($caminhoFile, $nameFile);
+
+            $dados['logo'] = $caminhoCompleto;
+            unlink(public_path($tenant->logo));
+
+            $tenant->update($dados);
+        }
+
+        return response()->json(['message' => 'Dados alterados com sucesso!']);
+
     }
 
     /**

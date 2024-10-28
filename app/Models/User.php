@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\TenantTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -53,6 +54,13 @@ class User extends Authenticatable
     }
 
     public function getAvatarAttribute($value) {
-        return url('/upload/'.$value);
+        if($value) {
+            return url('/upload/'.$value);
+        }
+        return null;
+    }
+
+    public function tenant(): HasOne {
+        return $this->hasOne(Tenant::class, 'id', 'tenant_id');
     }
 }

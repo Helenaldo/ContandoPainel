@@ -91,6 +91,16 @@ class ProcessoController extends Controller
      */
     public function destroy(Processo $processo)
     {
+        // Verifica se o processo possui registros relacionados em ProcessoMovimento
+        if ($processo->movimentos()->exists()) {
+            return response()->json([
+                'message' => 'Não é possível excluir o processo, pois existem movimentos relacionados.'
+            ], JsonResponse::HTTP_FORBIDDEN);
+        }
+
+        // Se não houver registros relacionados, o processo pode ser excluído
         return $processo->delete();
+
+        return response()->json(['message' => 'Processo deletado com sucesso!'], JsonResponse::HTTP_CREATED);
     }
 }

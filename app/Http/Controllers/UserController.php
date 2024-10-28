@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Services\isAdmin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -16,9 +17,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        return User::get();
+        // Captura o valor do parâmetro 'ativo' da query string, se existir
+        $ativo = $request->input('ativo', true);
+        $users = User::query();
+
+        // Se 'ativo' for passado, filtra os usuários por este valor
+        if ($ativo) {
+            $users = $users->where('ativo', $ativo);
+        }
+
+        $users = $users->get();
+
+        return response()->json($users);
     }
 
     /**
@@ -26,6 +39,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        if (!isAdmin::check()) {
+            return response()->json(['message' => 'Você não é um administrador'], JsonResponse::HTTP_FORBIDDEN);
+        }
         try {
             $user = $request->only([
                 'name',
@@ -60,10 +76,10 @@ class UserController extends Controller
 
         $imageName = Str::random(20).'.'.$image->getClientOriginalExtension();
 
-        $image->move('upload', $imageName);
+        $image->move('upload/'.$user->tenant->cnpj_cpf_formatado, $imageName);
 
         User::where('id', $request->user_id)->update([
-            'avatar' => $imageName
+            'avatar' => $user->tenant->cnpj_cpf_formatado.'/'.$imageName
         ]);
 
         return response()->json(['message' => 'Avatar do usuário cadastrado com sucesso!'], JsonResponse::HTTP_CREATED);
@@ -83,6 +99,10 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if (!isAdmin::check()) {
+            return response()->json(['message' => 'Você não é um administrador'], JsonResponse::HTTP_FORBIDDEN);
+        }
+
         $dados = $request->only([
             'name',
             'email',
@@ -101,7 +121,20 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $user->delete();
+        if (!isAdmin::check()) {
+            return response()->json(['message' => 'Você não é um administrador'], JsonResponse::HTTP_FORBIDDEN);
+        }
+
+        if($user->avatar) {
+            unlink(public_path('upload/'.$user->getRawOriginal('avatar')));
+        }
+
+        $dados['ativo'] = false;
+        $dados['avatar'] = null;
+        $user->update($dados);
+
+        return $user;
+
     }
 
 }

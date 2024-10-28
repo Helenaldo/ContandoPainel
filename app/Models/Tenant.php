@@ -22,6 +22,7 @@ class Tenant extends Model
         'numero',
         'bairro',
         'complemento',
+        'logo',
         'telefone',
         'cidade_id',
         'data_saida',
@@ -32,9 +33,22 @@ class Tenant extends Model
         return $this->belongsTo(Cidade::class);
     }
 
-    // Um Tenant tem vários Usuários
     public function users(): HasMany {
         return $this->hasMany(User::class);
+    }
+
+    public function clientes(): HasMany {
+        return $this->hasMany(Cliente::class);
+    }
+
+    public function processos(): HasMany {
+        return $this->hasMany(Processo::class);
+    }
+
+    public function getCnpjCpfFormatadoAttribute() {
+        return str_replace([
+            '.', '-', '/'
+        ], '', $this->cnpj_cpf);
     }
 }
 
